@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <style>
+    /* Add your custom styles here */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+    form {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #ccc;
+      padding: 20px;
+      width: 300px;
+      margin: 50px auto;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    input[type="checkbox"] {
+      margin-right: 5px;
+    }
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+    }
+    input[type="submit"]:hover {
+      background-color: #3e8e41;
+    }
+    a {
+      text-decoration: none;
+      color: #666;
+      font-size: 14px;
+    }
+    a:hover {
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <form id="loginForm" onsubmit="login(event)">
+    <h2>Login</h2>
+
+  
+    <input type="text" id="username" name="username" placeholder="Email or username" required><br>
+
+  
+    <input type="password" id="password" name="password" placeholder="Password" required><br>
+    <div>
+        <input type="checkbox" id="rememberMe" name="rememberMe">
+        <label for="rememberMe">Remember me</label>
+      </div>
+    <input type="submit" value="Sign in" id="submit-button">
+
+
+    <a href="forgot-password.html">Forgot password?</a>
+  </form>
+
+  <script>
+    function login(event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Get the entered username and password
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      // Save the credentials locally (you can use localStorage or any other method)
+      localStorage.setItem("username", username);
+      localStorage.setItem("password", password);
+
+      // Redirect to the welcome page
+      window.location.href = "welcome.html";
+    }
+  </script>
+</body>
+</html>
