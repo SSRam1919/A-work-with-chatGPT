@@ -2,6 +2,7 @@ import string
 
 alph = list(string.ascii_uppercase)
 
+#testing
 pan = []
 count = 0
 for i in alph:
