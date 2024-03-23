@@ -6,7 +6,7 @@ FROM php:7.4-apache
 COPY login.php /var/www/html/
 
 #RUN rm /usr/share/nginx/html/index.html
-RUN rm /etc/nginx/conf.d/default.conf
+#RUN rm /etc/nginx/conf.d/default.conf
 
 
 # Copy the HTML files to the appropriate location
