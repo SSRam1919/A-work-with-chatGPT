@@ -1,5 +1,5 @@
 FROM nginx:latest
-FROM php:7.4-apache
+#FROM php:7.4-apache
 
 # Copy PHP script into the container
 #COPY login.php /var/www/html/
