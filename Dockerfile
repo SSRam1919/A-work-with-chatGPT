@@ -5,6 +5,9 @@ FROM php:7.4-apache
 # Copy PHP script into the container
 COPY login.php /var/www/html/
 
+#install php extension for mysql
+RUN apt-get udpate && apt-get install -y php-mysql
+
 #RUN rm /usr/share/nginx/html/index.html
 #RUN rm /etc/nginx/conf.d/default.conf
 
