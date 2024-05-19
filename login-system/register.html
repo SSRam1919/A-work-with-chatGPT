@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Page</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <form id="registerForm" onsubmit="register(event)">
+    <h2>Register</h2>
+    <div id="error-message" class="error"></div>
+    <input type="text" id="name" name="name" placeholder="Full Name" required><br>
+    <input type="text" id="username" name="username" placeholder="Username" required><br>
+    <input type="password" id="password" name="password" placeholder="Password" required><br>
+    <input type="email" id="email" name="email" placeholder="Email (optional)"><br>
+    <input type="submit" value="Register">
+    <a href="index.html">Back to Login</a>
+  </form>
+
+  <script>
+    async function register(event) {
+      event.preventDefault();
+
+      var name = document.getElementById("name").value;
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+      var email = document.getElementById("email").value;
+      var errorMessage = document.getElementById("error-message");
+
+      try {
+        const response = await fetch('http://localhost:3000/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            name: name,
+            username: username,
+            password: password,
+            email: email
+          })
+        });
+
+        const result = await response.text();
+        if (response.ok) {
+          alert(result);
+          errorMessage.textContent = '';
+          window.location.href = 'index.html';
+        } else {
+          errorMessage.textContent = result;
+        }
+      } catch (error) {
+        console.error('Error during fetch:', error);
+        alert('An error occurred. Check the console for details.');
+      }
+    }
+  </script>
+</body>
+</html>
