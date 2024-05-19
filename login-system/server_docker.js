@@ -16,8 +16,8 @@ app.use(express.static(path.join(__dirname, '/'))); // Serve static files
 // Database setup
 const db = mysql.createPool({
   host: process.env.DB_HOST || 'db',  // Use 'db' as the host
-  user: process.env.DB_USER || 'sriram',
-  password: process.env.DB_PASSWORD || 'Sriram#2225',
+  user: process.env.DB_USER || 'your_mysql_username',
+  password: process.env.DB_PASSWORD || 'your_mysql_password',
   database: process.env.DB_NAME || 'login_system',
   waitForConnections: true,
   connectionLimit: 10,
@@ -25,17 +25,20 @@ const db = mysql.createPool({
 });
 
 // Check connection
-db.getConnection((err) => {
+db.getConnection((err, connection) => {
   if (err) {
     console.error('Error connecting to the database:', err);
-  } else {
-    console.log('Connected to the MySQL database.');
+    return;
   }
+  console.log('Connected to the MySQL database.');
+  connection.release();
 });
 
 // Register endpoint
 app.post('/register', (req, res) => {
   const { name, username, password, email } = req.body;
+
+  console.log('Register request received:', { name, username, email });
 
   // Check if username already exists
   const checkQuery = 'SELECT * FROM users WHERE username = ?';
@@ -45,6 +48,7 @@ app.post('/register', (req, res) => {
       return res.status(500).send('Server error');
     }
     if (results.length > 0) {
+      console.log('Username already taken:', username);
       return res.status(400).send('Username already taken');
     } else {
       // Hash password
@@ -57,6 +61,7 @@ app.post('/register', (req, res) => {
           console.error('Error inserting user:', err.message);
           return res.status(500).send('Server error');
         }
+        console.log('User registered successfully:', username);
         res.send('User registered successfully!');
       });
     }
@@ -66,6 +71,8 @@ app.post('/register', (req, res) => {
 // Login endpoint
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
+
+  console.log('Login request received:', username);
 
   // Retrieve user from the database
   const query = 'SELECT * FROM users WHERE username = ?';
@@ -79,11 +86,14 @@ app.post('/login', (req, res) => {
       const user = results[0];
       const isValid = bcrypt.compareSync(password, user.password);
       if (isValid) {
+        console.log('Login successful for user:', username);
         return res.status(200).json({ message: 'Login successful' });
       } else {
+        console.log('Invalid credentials for user:', username);
         return res.status(400).json({ message: 'Invalid credentials' });
       }
     } else {
+      console.log('User not found:', username);
       return res.status(404).json({ message: 'User not found' });
     }
   });
@@ -92,6 +102,8 @@ app.post('/login', (req, res) => {
 // Reset password endpoint
 app.post('/reset_password', (req, res) => {
   const { username, newPassword } = req.body;
+
+  console.log('Password reset request received:', username);
 
   // Hash the new password
   const hashedPassword = bcrypt.hashSync(newPassword, 10);
@@ -104,8 +116,10 @@ app.post('/reset_password', (req, res) => {
       return res.status(500).send('Server error');
     }
     if (result.affectedRows > 0) {
+      console.log('Password reset successful for user:', username);
       res.send('Password reset successful!');
     } else {
+      console.log('User not found for password reset:', username);
       res.status(404).send('User not found');
     }
   });
