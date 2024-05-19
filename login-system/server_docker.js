@@ -15,13 +15,22 @@ app.use(express.static(path.join(__dirname, '/'))); // Serve static files
 
 // Database setup
 const db = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
+  host: process.env.DB_HOST || 'db',  // Use 'db' as the host
   user: process.env.DB_USER || 'sriram',
   password: process.env.DB_PASSWORD || 'Sriram#2225',
   database: process.env.DB_NAME || 'login_system',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
+});
+
+// Check connection
+db.getConnection((err) => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+  } else {
+    console.log('Connected to the MySQL database.');
+  }
 });
 
 // Register endpoint
