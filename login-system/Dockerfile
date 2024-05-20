@@ -1,5 +1,6 @@
 # Use the official Node.js image as the base image
 FROM node:14
+FROM mysql:5.7
 
 # Create and change to the app directory
 WORKDIR /usr/src/app
@@ -17,4 +18,4 @@ COPY . .
 EXPOSE 3000
 
 # Define the command to run the app
-CMD ["node", "server.js"]
+CMD ["node", "server_docker.js"]
