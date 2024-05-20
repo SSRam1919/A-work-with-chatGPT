@@ -16,7 +16,7 @@ services:
   db:
     image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: your_mysql_root_password
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: login_system
       MYSQL_USER: sriram
       MYSQL_PASSWORD: Sriram#2225
