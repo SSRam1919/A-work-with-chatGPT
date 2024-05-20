@@ -16,8 +16,8 @@ app.use(express.static(path.join(__dirname, '/'))); // Serve static files
 // Database setup
 const db = mysql.createPool({
   host: process.env.DB_HOST || 'db',  // Use 'db' as the host
-  user: process.env.DB_USER || 'your_mysql_username',
-  password: process.env.DB_PASSWORD || 'your_mysql_password',
+  user: process.env.DB_USER || 'sriram',
+  password: process.env.DB_PASSWORD || 'Sriram#2225',
   database: process.env.DB_NAME || 'login_system',
   waitForConnections: true,
   connectionLimit: 10,
